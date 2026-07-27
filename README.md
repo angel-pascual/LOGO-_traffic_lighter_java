@@ -10,21 +10,21 @@
 
 Este proyecto implementa una solución integral de automatización industrial y telecontrol para la gestión inteligente del tráfico urbano. El sistema combina la robustez de un **Controlador Lógico Programable (PLC) Siemens LOGO!** a nivel de campo con una **interfaz SCADA (Supervisory Control and Data Acquisition)** personalizada, desarrollada completamente en **Java**.
 
-A través de una conexión Ethernet industrial utilizando el protocolo nativo Siemens S7, el software en Java permite a un centro de control supervisar el estado de la vía, cambiar entre múltiples modos de operación (Automático, Noche, Onda Verde de Emergencia, Peatonal y Paro) y **reconfigurar los tiempos de temporización en tiempo real** sin necesidad de detener la ejecución de la CPU del PLC.
+A través de una conexión Ethernet industrial utilizando el protocolo nativo Siemens S7, el software en Java permite a un centro de control supervisar el estado de la vía, cambiar entre múltiples modos de operación (Automático, Noche, Onda Verde de Emergencia, Peatonal y Paro) y **reconfigurar los tiempos de temporización en tiempo real** sin necesidad de detener la ejecución de la CPU del PLC ni alterar el programa Ladder subyacente.
 
 ### 🎯 Objetivo del Proyecto
 
-Desarrollar una alternativa de telecontrol vial económica, transparente y libre de licencias comerciales costosas (como WinCC o InTouch), demostrando la integración directa entre el software a medida y los sistemas de automatización industrial aplicados a la problemática del tráfico urbano.
+Desarrollar una alternativa de telecontrol vial económica, transparente, escalable y libre de licencias comerciales costosas (como WinCC o InTouch), demostrando la convergencia directa entre el desarrollo de software de alto nivel (IT) y los sistemas de automatización de control operativo en campo (OT) aplicados a la problemática del tráfico urbano.
 
 ---
 
 ## 🧩 ARQUITECTURA Y PROGRAMACIÓN EN LADDER (PLC SIEMENS LOGO!)
 
-El núcleo del control de campo reside en el programa cargado en la CPU del PLC Siemens LOGO!. La lógica en lenguaje KOP/Ladder fue diseñada bajo el principio de **autonomía determinista**: la CPU ejecuta de forma ininterrumpida la secuencia de luces y la gestión de tiempos, garantizando que el semáforo siga funcionando con seguridad incluso si la comunicación con la PC SCADA se interrumpe.
+El núcleo del control de campo reside en el programa cargado en la CPU del PLC Siemens LOGO!. La lógica en lenguaje KOP/Ladder fue diseñada bajo el principio de **autonomía determinista**: la CPU ejecuta de forma ininterrumpida la secuencia de luces y la gestión de tiempos, garantizando que el semáforo siga funcionando con seguridad operativa incluso si el enlace de comunicación con el servidor SCADA se interrumpe.
 
 ### 1. Mapeo de Memoria Virtual (Tabla VM / DB1)
 
-Para permitir la lectura y escritura remota desde Java sin alterar el ciclo de escaneo del PLC, se estructuró un bloque de variables dentro de la **Memoria VM (Variable Memory)** del LOGO!, mapeada bajo la librería Moka7 como el Bloque de Datos 1 (`DB1`):
+Para permitir la lectura y escritura remota desde Java sin alterar el ciclo de escaneo del PLC, se estructuró un bloque de variables dentro de la **Memoria VM (Variable Memory)** del LOGO!, mapeada en el protocolo S7 bajo la librería Moka7 como el Bloque de Datos 1 (`DB1`):
 
 | Dirección PLC | Variable SCADA | Tipo de Dato | Unidades PLC | Descripción Lógica en Ladder |
 | :--- | :--- | :--- | :--- | :--- |
