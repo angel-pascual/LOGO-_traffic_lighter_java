@@ -10,7 +10,7 @@
 
 Este proyecto implementa una solución integral de automatización industrial y telecontrol para la gestión inteligente del tráfico urbano. El sistema combina la robustez de un **Controlador Lógico Programable (PLC) Siemens LOGO!** a nivel de campo con una **interfaz SCADA (Supervisory Control and Data Acquisition)** personalizada, desarrollada completamente en **Java**.
 
-A través de una conexión Ethernet industrial utilizando el protocolo nativo Siemens S7, el software en Java permite a un centro de control supervisar el estado de la vía, cambiar entre múltiples modos de operación (Automático, Noche, Onda Verde de Emergencia, Peatonal y Paro) y **reconfigurar los tiempos de temporización en tiempo real** sin necesidad de detener la ejecución de la CPU del PLC ni alterar el programa Ladder subyacente.
+A través de una conexión Ethernet industrial, y utilizando la librería **Moka7** como una alternativa eficiente para establecer la comunicación bajo el protocolo nativo Siemens S7, el software en Java permite a un centro de control supervisar el estado de la vía, cambiar entre múltiples modos de operación (Automático, Noche, Onda Verde de Emergencia, Peatonal y Paro) y **reconfigurar los tiempos de temporización en tiempo real** sin necesidad de detener la ejecución de la CPU del PLC ni alterar el programa Ladder subyacente.
 
 ### 🎯 Objetivo del Proyecto
 
