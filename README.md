@@ -103,3 +103,17 @@ btnModoManual.addActionListener(new ActionListener() {
         actualizarEstadoVisual("Modo Manual Activado");
     }
 });
+```
+---
+### 2. Hilos de Ejecución (Multithreading)
+La lectura del estado físico del semáforo se realiza a través de un hilo secundario (usando `Thread` o `SwingWorker`). Este proceso consulta periódicamente (polling) las direcciones de memoria o salidas del PLC de manera silenciosa en el fondo, actualizando los colores en la pantalla de Java sin interrumpir la experiencia del usuario.
+
+### 3. Protocolo de Enlace (Moka7)
+La interfaz se encarga de empaquetar las instrucciones lógicas en el formato que el PLC comprende (matrices de bytes) a través del protocolo S7. Si se requiere encender la luz verde, Java procesa la escritura en la variable específica mapeada en la memoria VM del LOGO!, y maneja las posibles excepciones de desconexión de red mediante bloques `try-catch` para evitar cierres inesperados de la interfaz.
+
+---
+
+## 🚀 Notas de Implementación
+
+*   Para ejecutar o compilar esta interfaz, es estrictamente necesario asegurarse de que la librería de comunicación **Moka7** (`.jar`) esté incluida en el `CLASSPATH` del proyecto o gestionada correctamente si se usa Maven/Gradle.
+*   Asegúrese de configurar correctamente la **Dirección IP del autómata (PLC)** y los parámetros del Rack/Slot (típicamente 0, 1 o 0, 0 para la serie LOGO!) dentro de la clase de configuración de la conexión en el código fuente de Java.
