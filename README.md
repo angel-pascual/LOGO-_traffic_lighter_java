@@ -43,10 +43,6 @@ La secuencia del semáforo no utiliza retardos fijos, sino una **arquitectura de
 * **Temporizador Maestro de Ciclo (T007):** Este bloque coordina la duración total de una vuelta completa del semáforo. Su consigna de tiempo se actualiza desde `VW8`, cuyo valor equivale a la suma estricta de $T_{verde} + T_{ambar} + T_{rojo}$. Al finalizar su conteo, el temporizador autorresetea la cadena, reiniciando el ciclo continuo.
 * **Cascada de Fases (T003, T004, T005):** Cada fase (Verde, Ámbar y Rojo) está enlazada a un temporizador con retardo a la conexión/desconexión cuyos parámetros internos apuntan directamente a los registros `VW2`, `VW4` y `VW6`. 
 * **Prevención de Solapamiento:** Se implementaron interbloqueos cruzados (contactos normalmente cerrados en serie con las bobinas de salida) para garantizar que jamás puedan encenderse simultáneamente dos luces de distintas fases en el mismo sentido de vía.
----
-# 🚦 Interfaz de Control de Semáforo en Java (HMI para PLC)
-
-Este documento detalla la arquitectura, el diseño y la lógica de programación detrás de la Interfaz Gráfica de Usuario (GUI) desarrollada en Java, la cual actúa como sistema central de control y monitoreo para nuestro proyecto de semáforo automatizado gestionado por un PLC.
 
 ---
 
@@ -60,6 +56,12 @@ El estado de funcionamiento es determinado por el valor numérico contenido en l
  [ VW0 == 3 ] ----( )-- Activa Onda Verde: Fuerza Salida Q1 (Verde) e inhabilita temporizadores de cambio
  [ VW0 == 4 ] ----( )-- Activa Ciclo Peatonal: Fuerza transición rápida a Rojo e inhabilita reinicio automático
  [ VW0 == 6 ] ----( )-- Paro Total de Emergencia: Desactiva todas las salidas y bloquea el sistema en Rojo
+```
+---
+# 🚦 Interfaz de Control de Semáforo en Java (HMI para PLC)
+
+Este documento detalla la arquitectura, el diseño y la lógica de programación detrás de la Interfaz Gráfica de Usuario (GUI) desarrollada en Java, la cual actúa como sistema central de control y monitoreo para nuestro proyecto de semáforo automatizado gestionado por un PLC.
+
 ---
 
 ## ⚙️ Arquitectura del Sistema
@@ -101,15 +103,3 @@ btnModoManual.addActionListener(new ActionListener() {
         actualizarEstadoVisual("Modo Manual Activado");
     }
 });
----
-
-### 1.3 Decodificación de Modos de Operación y Prioridades
-
-El estado de funcionamiento es determinado por el valor numérico contenido en la palabra `VW0`, el cual activa o inhibe ramas específicas del diagrama Ladder mediante **Comparadores Analógicos/Digitales de Valor**:
-
-```text
- [ VW0 == 1 ] ----( )-- Habilita Secuencia Cíclica Automática (T003 -> T004 -> T005)
- [ VW0 == 2 ] ----( )-- Activa Modo Noche: Desconecta Verde/Rojo y conmuta Ámbar a Marca M8 (Parpadeo)
- [ VW0 == 3 ] ----( )-- Activa Onda Verde: Fuerza Salida Q1 (Verde) e inhabilita temporizadores de cambio
- [ VW0 == 4 ] ----( )-- Activa Ciclo Peatonal: Fuerza transición rápida a Rojo e inhabilita reinicio automático
- [ VW0 == 6 ] ----( )-- Paro Total de Emergencia: Desactiva todas las salidas y bloquea el sistema en Rojo
